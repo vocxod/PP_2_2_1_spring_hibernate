@@ -10,30 +10,67 @@ import hiber.service.CarService;
 
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+import com.mysql.cj.xdevapi.SessionFactory;
+
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Random;
 
 public class MainApp {
+
+  public static final String[] FIRST_NAMES = {
+      "Одуванчик", "Ромашка", "Роза", "Зверобой", "Лилия"
+  };
+
+  public static final String[] LAST_NAMES = {
+      "Штирлиц", "Чапаев", "Вовочка", "МаленькийМальчик"
+  };
+
+  public static final String[] MAILBOX = {
+      "oneone", "twotwo", "threeThee", "fourfour", "fivefive", "sixsix"
+  };
+
+  public static final String[] MAIL_DOMAINS = {
+      "gmail.com", "yandex.ru", "yahoo.com", "mail.ru"
+  };
+
+  public static final String[] MODELS = { "VOLVO", "AUDI", "VERDO", "GMC" };
+
+  public static String generateCarModel() {
+    return MODELS[PRNG.nextInt(MODELS.length)];
+  }
+
+  private static final Random PRNG = new Random();
+
+  public static String generateMail() {
+    String result = MAILBOX[PRNG.nextInt(MAILBOX.length)] + MAIL_DOMAINS[PRNG.nextInt(MAIL_DOMAINS.length)];
+    return result;
+  }
+
   public static void main(String[] args) throws SQLException {
     AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
 
     UserService userService = context.getBean(UserService.class);
     CarService carService = context.getBean(CarService.class);
 
-    User userOne = new User("User1", "Lastname1", "user1@mail.ru");
+    // Create sample car
+    Car car = new Car(generateCarModel(), PRNG.nextInt());
+    carService.add(car);
+
+    // Create sample user
+    User userOne = new User(FIRST_NAMES[PRNG.nextInt(FIRST_NAMES.length)], LAST_NAMES[PRNG.nextInt(LAST_NAMES.length)],
+        generateMail());
+    car.setUser(userOne);
+
     userService.add(userOne);
-    System.out.println(userOne);
+
+    // car.save();
+
+    // System.out.println(userOne);
 
     List<User> users = userService.listUsers();
     for (User user : users) {
       System.out.println(user);
-      /*
-       * System.out.println("Id = " + user.getId());
-       * System.out.println("First Name = " + user.getFirstName());
-       * System.out.println("Last Name = " + user.getLastName());
-       * System.out.println("Email = " + user.getEmail());
-       * System.out.println();
-       */
     }
 
     /*

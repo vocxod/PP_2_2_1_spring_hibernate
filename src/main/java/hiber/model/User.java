@@ -19,8 +19,8 @@ public class User {
   @Column(name = "email")
   private String email;
 
-  @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-  @PrimaryKeyJoinColumn
+  @OneToOne(cascade = CascadeType.ALL)
+  @JoinColumn(name = "car_id", referencedColumnName = "id")
   private Car car;
 
   public Car getCar() {
@@ -73,7 +73,12 @@ public class User {
   }
 
   public String toString() {
-    String carInfo = this.getCar().equals(null) ? "Еще не купил" : this.getCar().toString();
+    String carInfo;
+    if (this.getCar() == null) {
+      carInfo = "not have yet";
+    } else {
+      carInfo = this.getCar().toString();
+    }
     return "ID:" + this.getId() + "FirstName:" + this.getFirstName() + " LastName:" + this.getLastName()
         + " MyCar:" + carInfo;
   }
