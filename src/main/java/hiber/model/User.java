@@ -73,8 +73,9 @@ public class User {
   }
 
   public String toString() {
-    return "ID:" + this.getId() + "FirstName:" + this.getFirstName() + " LastName:" + this.getLastName() + " MyCar:"
-        + this.getCar();
+    String carInfo = this.getCar().equals(null) ? "Еще не купил" : this.getCar().toString();
+    return "ID:" + this.getId() + "FirstName:" + this.getFirstName() + " LastName:" + this.getLastName()
+        + " MyCar:" + carInfo;
   }
 
 }
