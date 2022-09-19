@@ -18,34 +18,61 @@ public class MainApp {
     AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
 
     UserService userService = context.getBean(UserService.class);
+    CarService carService = context.getBean(CarService.class);
 
-    userService.add(new User("User1", "Lastname1", "user1@mail.ru"));
-    userService.add(new User("User2", "Lastname2", "user2@mail.ru"));
-    userService.add(new User("User3", "Lastname3", "user3@mail.ru"));
-    userService.add(new User("User4", "Lastname4", "user4@mail.ru"));
+    User userOne = new User("User1", "Lastname1", "user1@mail.ru");
+    userService.add(userOne);
+    System.out.println(userOne);
 
     List<User> users = userService.listUsers();
     for (User user : users) {
-      System.out.println("Id = " + user.getId());
-      System.out.println("First Name = " + user.getFirstName());
-      System.out.println("Last Name = " + user.getLastName());
-      System.out.println("Email = " + user.getEmail());
-      System.out.println();
+      System.out.println(user);
+      /*
+       * System.out.println("Id = " + user.getId());
+       * System.out.println("First Name = " + user.getFirstName());
+       * System.out.println("Last Name = " + user.getLastName());
+       * System.out.println("Email = " + user.getEmail());
+       * System.out.println();
+       */
     }
 
-    CarService carService = context.getBean(CarService.class);
-    carService.add(new Car("Moskvitch", 407));
-    carService.add(new Car("Moskvitch", 408));
-    carService.add(new Car("Moskvitch", 412));
-    carService.add(new Car("ВАЗ", 21011));
-    carService.add(new Car("ВАЗ", 21012));
-    carService.add(new Car("ВАЗ", 21093));
-    carService.add(new Car("ВАЗ", 21099));
+    /*
+     * System.out.println(userOne);
+     * 
+     * // выдадим автомобиль юзверю
+     * Car carOne = new Car(userOne.getId(), "старый запорожеТц", (int) (100500 +
+     * userOne.getId()));
+     * carService.add(carOne);
+     * 
+     * System.out.println(userOne);
+     */
 
-    List<Car> cars = carService.listCars();
-    for (Car car : cars) {
-      System.out.println("MODEL:" + car.getModel() + " SERIES:" + car.getSeries());
-    }
+    /*
+     * List<User> users = userService.listUsers();
+     * for (User user : users) {
+     * 
+     * System.out.println("Id = " + user.getId());
+     * System.out.println("First Name = " + user.getFirstName());
+     * System.out.println("Last Name = " + user.getLastName());
+     * System.out.println("Email = " + user.getEmail());
+     * System.out.println();
+     * }
+     */
+
+    /*
+     * carService.add(new Car("Moskvitch", 407));
+     * carService.add(new Car("Moskvitch", 408));
+     * carService.add(new Car("Moskvitch", 412));
+     * carService.add(new Car("ВАЗ", 21011));
+     * carService.add(new Car("ВАЗ", 21012));
+     * carService.add(new Car("ВАЗ", 21093));
+     * carService.add(new Car("ВАЗ", 21099));
+     * 
+     * List<Car> cars = carService.listCars();
+     * for (Car car : cars) {
+     * System.out.println("MODEL:" + car.getModel() + " SERIES:" + car.getSeries());
+     * }
+     */
 
     context.close();
   }

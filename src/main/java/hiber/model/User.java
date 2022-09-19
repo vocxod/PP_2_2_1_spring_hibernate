@@ -19,6 +19,18 @@ public class User {
   @Column(name = "email")
   private String email;
 
+  @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+  @PrimaryKeyJoinColumn
+  private Car car;
+
+  public Car getCar() {
+    return this.car;
+  }
+
+  public void setCar(Car car) {
+    this.car = car;
+  }
+
   public User() {
   }
 
@@ -59,4 +71,10 @@ public class User {
   public void setEmail(String email) {
     this.email = email;
   }
+
+  public String toString() {
+    return "ID:" + this.getId() + "FirstName:" + this.getFirstName() + " LastName:" + this.getLastName() + " MyCar:"
+        + this.getCar();
+  }
+
 }

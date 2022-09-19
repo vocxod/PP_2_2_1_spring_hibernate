@@ -7,8 +7,8 @@ import javax.persistence.*;
 public class Car {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
+  // GeneratedValue(strategy = GenerationType.IDENTITY)
 
   @Column(name = "model")
   private String model;
@@ -16,7 +16,26 @@ public class Car {
   @Column(name = "series")
   private Integer series;
 
+  @OneToOne
+  @MapsId
+  @JoinColumn(name = "id")
+  private User user;
+
+  public User getUser() {
+    return this.user;
+  }
+
+  public void setUser(User user) {
+    this.user = user;
+  }
+
   public Car() {
+  }
+
+  public Car(Long id, String model, Integer series) {
+    this.setId(id);
+    this.model = model;
+    this.series = series;
   }
 
   public Car(String model, Integer series) {
@@ -46,6 +65,10 @@ public class Car {
 
   public void setSeries(Integer series) {
     this.series = series;
+  }
+
+  public String toString() {
+    return "Owner:" + this.getUser() + " model:" + this.model + " series:" + this.series;
   }
 
 }
