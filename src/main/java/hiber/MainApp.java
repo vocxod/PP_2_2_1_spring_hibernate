@@ -23,18 +23,18 @@ public class MainApp {
   };
 
   public static final String[] LAST_NAMES = {
-      "Штирлиц", "Чапаев", "Вовочка", "МаленькийМальчик"
+      "Гранит", "Валун", "Мрамор", "Булыжник"
   };
 
   public static final String[] MAILBOX = {
-      "oneone", "twotwo", "threeThee", "fourfour", "fivefive", "sixsix"
+      "oneone", "twotwo", "jetjet", "fourfour", "fivefive", "yetyet"
   };
 
   public static final String[] MAIL_DOMAINS = {
-      "gmail.com", "yandex.ru", "yahoo.com", "mail.ru"
+      "mylo.com", "yandex.aru", "mail.oru", "vodka.rom"
   };
 
-  public static final String[] MODELS = { "VOLVO", "AUDI", "VERDO", "GMC" };
+  public static final String[] MODELS = { "TAZIK", "OSEL", "VEDRO", "LOSHAD" };
 
   public static String generateCarModel() {
     return MODELS[PRNG.nextInt(MODELS.length)];
@@ -54,17 +54,16 @@ public class MainApp {
     CarService carService = context.getBean(CarService.class);
 
     // Create sample car
-    Car car = new Car(generateCarModel(), PRNG.nextInt());
+    Car car = new Car(generateCarModel(), PRNG.nextInt(99));
     carService.add(car);
 
     // Create sample user
-    User userOne = new User(FIRST_NAMES[PRNG.nextInt(FIRST_NAMES.length)], LAST_NAMES[PRNG.nextInt(LAST_NAMES.length)],
+    User userOne = new User(
+        FIRST_NAMES[PRNG.nextInt(FIRST_NAMES.length)],
+        LAST_NAMES[PRNG.nextInt(LAST_NAMES.length)],
         generateMail());
-    car.setUser(userOne);
 
-    userService.add(userOne);
-
-    // car.save();
+    userService.add(userOne, car);
 
     // System.out.println(userOne);
 
@@ -72,44 +71,6 @@ public class MainApp {
     for (User user : users) {
       System.out.println(user);
     }
-
-    /*
-     * System.out.println(userOne);
-     * 
-     * // выдадим автомобиль юзверю
-     * Car carOne = new Car(userOne.getId(), "старый запорожеТц", (int) (100500 +
-     * userOne.getId()));
-     * carService.add(carOne);
-     * 
-     * System.out.println(userOne);
-     */
-
-    /*
-     * List<User> users = userService.listUsers();
-     * for (User user : users) {
-     * 
-     * System.out.println("Id = " + user.getId());
-     * System.out.println("First Name = " + user.getFirstName());
-     * System.out.println("Last Name = " + user.getLastName());
-     * System.out.println("Email = " + user.getEmail());
-     * System.out.println();
-     * }
-     */
-
-    /*
-     * carService.add(new Car("Moskvitch", 407));
-     * carService.add(new Car("Moskvitch", 408));
-     * carService.add(new Car("Moskvitch", 412));
-     * carService.add(new Car("ВАЗ", 21011));
-     * carService.add(new Car("ВАЗ", 21012));
-     * carService.add(new Car("ВАЗ", 21093));
-     * carService.add(new Car("ВАЗ", 21099));
-     * 
-     * List<Car> cars = carService.listCars();
-     * for (Car car : cars) {
-     * System.out.println("MODEL:" + car.getModel() + " SERIES:" + car.getSeries());
-     * }
-     */
 
     context.close();
   }

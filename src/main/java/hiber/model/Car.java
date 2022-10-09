@@ -67,7 +67,7 @@ public class Car {
   }
 
   public String toString() {
-    return "Owner:" + this.getUser() + " model:" + this.model + " series:" + this.series;
+    return "Owner:" + " model:" + this.model + " series:" + this.series;
   }
 
 }
