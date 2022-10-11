@@ -26,3 +26,8 @@ target/
 .project
 .settings/
 add_dependency.txt
+.classpath
+.project
+.settings
+target
+.idea

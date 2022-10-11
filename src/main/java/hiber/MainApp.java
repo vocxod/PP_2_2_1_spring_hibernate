@@ -1,17 +1,11 @@
 package hiber;
 
 import hiber.config.AppConfig;
-
-import hiber.model.User;
 import hiber.model.Car;
-
-import hiber.service.UserService;
+import hiber.model.User;
 import hiber.service.CarService;
-
+import hiber.service.UserService;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-
-import com.mysql.cj.xdevapi.SessionFactory;
-
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Random;
@@ -34,7 +28,7 @@ public class MainApp {
       "mylo.com", "yandex.aru", "mail.oru", "vodka.rom"
   };
 
-  public static final String[] MODELS = { "TAZIK", "OSEL", "VEDRO", "LOSHAD" };
+  public static final String[] MODELS = { "TAZIK", "OSEL", "VEDRO", "HORSE", "COW" };
 
   public static String generateCarModel() {
     return MODELS[PRNG.nextInt(MODELS.length)];
@@ -43,33 +37,39 @@ public class MainApp {
   private static final Random PRNG = new Random();
 
   public static String generateMail() {
-    String result = MAILBOX[PRNG.nextInt(MAILBOX.length)] + MAIL_DOMAINS[PRNG.nextInt(MAIL_DOMAINS.length)];
+    String result = MAILBOX[PRNG.nextInt(MAILBOX.length)] + "@" + MAIL_DOMAINS[PRNG.nextInt(MAIL_DOMAINS.length)];
     return result;
   }
 
   public static void main(String[] args) throws SQLException {
     AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
 
-    UserService userService = context.getBean(UserService.class);
     CarService carService = context.getBean(CarService.class);
+    UserService userService = context.getBean(UserService.class);
 
-    // Create sample car
-    Car car = new Car(generateCarModel(), PRNG.nextInt(99));
+    Car car = new Car(MODELS[PRNG.nextInt(MODELS.length)], PRNG.nextInt(10));
     carService.add(car);
 
-    // Create sample user
-    User userOne = new User(
+    User user = new User(
         FIRST_NAMES[PRNG.nextInt(FIRST_NAMES.length)],
         LAST_NAMES[PRNG.nextInt(LAST_NAMES.length)],
         generateMail());
 
-    userService.add(userOne, car);
+    userService.add(user, car);
 
-    // System.out.println(userOne);
-
+    System.out.println("Show all users.");
     List<User> users = userService.listUsers();
-    for (User user : users) {
-      System.out.println(user);
+    for (User uItem : users) {
+      System.out.println(uItem);
+    }
+
+    System.out.println("Find user by each car.");
+    List<Car> cars = carService.listCars();
+    for (Car carItem : cars) {
+      User selectedUser = userService.getUserByCar(carItem);
+      System.out.print("\u001B[32m");
+      System.out.println(selectedUser);
+      System.out.print("\u001B[0m");
     }
 
     context.close();

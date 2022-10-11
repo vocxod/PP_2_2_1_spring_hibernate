@@ -1,6 +1,7 @@
 package hiber.model;
 
 import javax.persistence.*;
+// import hiber.model.Car;
 
 @Entity
 @Table(name = "user")
@@ -23,12 +24,12 @@ public class User {
   @JoinColumn(name = "car_id", referencedColumnName = "id")
   private Car car;
 
-  public Car getCar() {
-    return this.car;
-  }
-
   public void setCar(Car car) {
     this.car = car;
+  }
+
+  public Car getCar() {
+    return this.car;
   }
 
   public User() {
@@ -73,14 +74,8 @@ public class User {
   }
 
   public String toString() {
-    String carInfo;
-    if (this.getCar() == null) {
-      carInfo = "not have yet";
-    } else {
-      carInfo = this.getCar().toString();
-    }
-    return "ID:" + this.getId() + "FirstName:" + this.getFirstName() + " LastName:" + this.getLastName()
-        + " MyCar:" + carInfo;
+    return "ID: " + this.getId() + " NAME: " + this.getFirstName() + " LASTNAME: " + this.getLastName()
+        + " EMAIL: " + this.getEmail();
   }
 
 }

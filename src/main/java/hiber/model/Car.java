@@ -20,14 +20,6 @@ public class Car {
   @OneToOne(mappedBy = "car")
   private User user;
 
-  public User getUser() {
-    return this.user;
-  }
-
-  public void setUser(User user) {
-    this.user = user;
-  }
-
   public Car() {
   }
 
@@ -40,6 +32,14 @@ public class Car {
   public Car(String model, Integer series) {
     this.model = model;
     this.series = series;
+  }
+
+  public void setUser(User user) {
+    this.user = user;
+  }
+
+  public User getUser() {
+    return this.user;
   }
 
   public Long getId() {
@@ -67,7 +67,7 @@ public class Car {
   }
 
   public String toString() {
-    return "Owner:" + " model:" + this.model + " series:" + this.series;
+    return "Model:" + this.model + " series:" + this.series;
   }
 
 }
