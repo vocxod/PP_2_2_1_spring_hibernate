@@ -31,3 +31,4 @@ add_dependency.txt
 .settings
 target
 .idea
+mysql.prepare.sh
